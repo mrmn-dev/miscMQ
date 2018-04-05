@@ -4,11 +4,12 @@
 /*                                                                           */
 /* This program is run as follows:                                           */
 /*                                                                           */
-/*     java amqbdlh -qm ... -q ...                                           */
+/*     java amqbdlh -qm ... -q ... -ml                                       */
 /*                                                                           */
 /* where                                                                     */
 /*     -qm is the queue manager name                                         */
 /*     -q  is the queue with dead letter messages                            */
+/*     -ml message length                                                    */
 /*                                                                           */
 /* An alternate method is to run the program with an amqbdlh.properties file */
 /* that contains the qm and q definitions:                                   */
@@ -31,6 +32,8 @@ public class amqbdlh {
 
    private static String    myQmgr  = null;
    private static String    myQueue = null;
+   private static String    myMsgDataLth = null;
+   private static Integer   intMsgDataLth = 172;
    MQDataException dex = null;
 
    /*******************************************************/
@@ -44,6 +47,7 @@ public class amqbdlh {
       /***********************************************/
       myQmgr  = System.getProperty("qm");
       myQueue = System.getProperty("q");
+	  myMsgDataLth = System.getProperty("ml");
 
       /*************************************************/
       /* Now go and get the amqbdlh.properties file.   */
@@ -64,6 +68,7 @@ public class amqbdlh {
       /******************************************************/
       if (myQmgr  == null)       {myQmgr  = System.getProperty("qm");}
       if (myQueue == null)       {myQueue = System.getProperty("q");}
+	  if (myMsgDataLth == null)       {myQueue = System.getProperty("ml");}
 
       /************************************************************/
       /* You could also use a ResourceBundle to get to the        */
@@ -92,6 +97,7 @@ public class amqbdlh {
             if( arg.equals("-qm") ) {
                 if ( i+1<args.length ) {
                    myQmgr = args[++i];
+                   System.out.println("Qmgr=" + myQmgr);
                 } else {
                    System.out.println("didn't specify qmgr, exiting");
                    return;
@@ -100,9 +106,19 @@ public class amqbdlh {
             } else if( arg.equals("-q") ) {
                 if ( i+1<args.length ) {
                    myQueue = args[++i];
+                   System.out.println("Q=" + myQueue);
                 } else {
                    System.out.println("didn't specify queue, exiting");
                    return;
+                }
+            } else if( arg.equals("-ml") ) {
+                if ( i+1<args.length ) {
+                   myMsgDataLth = args[++i];
+				   intMsgDataLth = Integer.parseInt(myMsgDataLth);
+                } else {
+                   System.out.println("didn't specify message length");
+                   System.out.println("using default of 172");
+				   return;
                 }
 
             } else {
@@ -245,7 +261,7 @@ public class amqbdlh {
          MQGetMessageOptions gmo = new MQGetMessageOptions(); 
          gmo.options = gmo.options + MQC.MQGMO_BROWSE_NEXT + MQC.MQGMO_ACCEPT_TRUNCATED_MSG;
          MQMessage myMessage = new MQMessage();
-		 myMessage.resizeBuffer(200);
+		 myMessage.resizeBuffer(intMsgDataLth);
 		 
          while (myrc != MQException.MQRC_NO_MSG_AVAILABLE) {
 			 
@@ -269,7 +285,11 @@ public class amqbdlh {
             j = j + 1;
 			try {
 				dlh.read(myMessage);
-				System.out.println(dlh.getReason() + "," + dlh.getDestQName() + "," + dlh.getDestQMgrName() + "," + dlh.getPutApplName());
+				Integer myReason = dlh.getReason();
+				String myQName = dlh.getDestQName();
+				String myQmgr = dlh.getDestQMgrName();
+				String myAppName = dlh.getPutApplName();
+				System.out.println(myReason + "," + myQName.trim() + "," + myQmgr.trim() + "," + myAppName.trim());
 			} catch(MQDataException dex) {
 				// System.out.println("MQDataException: " + dlh.getReason());
 			};
@@ -279,6 +299,15 @@ public class amqbdlh {
 			/* */
 
 
+         }
+         try {
+            browseQueue.close();
+            // System.out.println(" CLOSE of queue");
+            qMgr.disconnect();
+            // System.out.println(" DISCONNECT from queue manager");
+         } catch (MQException ex) {
+            System.out.println("MQ error: Completion code " +
+                         ex.completionCode + " Reason code " + ex.reasonCode);
          }
 
       } catch (MQException ex) {
@@ -290,16 +319,6 @@ public class amqbdlh {
          }
       } catch (java.io.IOException ex) {
          System.out.println("An IO error occurred: " + ex);
-      }
-        
-      try {
-         browseQueue.close();
-         // System.out.println(" CLOSE of queue");
-         qMgr.disconnect();
-         // System.out.println(" DISCONNECT from queue manager");
-      } catch (MQException ex) {
-         System.out.println("MQ error: Completion code " +
-                      ex.completionCode + " Reason code " + ex.reasonCode);
       }
 
       // System.out.println("**************************");
@@ -419,5 +438,3 @@ public class amqbdlh {
 
    
 }
-
-

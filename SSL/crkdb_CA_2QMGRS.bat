@@ -1,4 +1,7 @@
-echo %JAVA_HOME%
+REM This series of IBM gskit commands is what could used to set up SSL for two queue managers.
+REM Three keystores are created.
+REM wmqca.kdb will serve as the container of the certificate authority.
+REM qma_ssl.kdb and qmb_ssl.kdb are the queue manager SSL keystores.
 gsk7cmd -keydb -create -db qma_ssl.kdb -pw mqssl -type cms -expire 1095 -stash
 gsk7cmd -keydb -create -db qmb_ssl.kdb -pw mqssl -type cms -expire 1095 -stash
 gsk7cmd -keydb -create -db wmqca.kdb -pw mqssl -type cms -expire 1095 -stash

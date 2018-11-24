@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 
-#usage perl unstash.pl <Stash file name ex stash.sth>
+# usage perl unstash.pl <Stash file name ex stash.sth>
+# this will print the password from within the stash file
 
 use strict;
 

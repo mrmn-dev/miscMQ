@@ -1,0 +1,39 @@
+<joblist>
+  <job>
+    <defaultTab>summary</defaultTab>
+    <description>clear previous staging directory and create new one</description>
+    <dispatch>
+      <excludePrecedence>true</excludePrecedence>
+      <keepgoing>false</keepgoing>
+      <rankOrder>ascending</rankOrder>
+      <successOnEmptyNodeFilter>false</successOnEmptyNodeFilter>
+      <threadcount>1</threadcount>
+    </dispatch>
+    <executionEnabled>true</executionEnabled>
+    <group>install</group>
+    <id>4f6401a4-1134-4acc-8961-320fcb853d80</id>
+    <loglevel>INFO</loglevel>
+    <name>createstagedir</name>
+    <nodeFilterEditable>true</nodeFilterEditable>
+    <nodefilters>
+      <filter>.*</filter>
+    </nodefilters>
+    <nodesSelectedByDefault>false</nodesSelectedByDefault>
+    <scheduleEnabled>true</scheduleEnabled>
+    <sequence keepgoing='false' strategy='node-first'>
+      <command>
+        <description>clear_rdstage</description>
+        <exec>cd rdstage &amp;&amp; mkdir ../.tmp_to_remove &amp;&amp; mv -- * ../.tmp_to_remove &amp;&amp; rm -rf ../.tmp_to_remove &amp;</exec>
+      </command>
+      <command>
+        <description>rm rdstage</description>
+        <exec>cd ~ &amp;&amp; rm -r rdstage</exec>
+      </command>
+      <command>
+        <description>create rdstage</description>
+        <exec>cd ~ &amp;&amp; mkdir rdstage</exec>
+      </command>
+    </sequence>
+    <uuid>4f6401a4-1134-4acc-8961-320fcb853d80</uuid>
+  </job>
+</joblist>

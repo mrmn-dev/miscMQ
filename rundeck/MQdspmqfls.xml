@@ -1,0 +1,47 @@
+<joblist>
+  <job>
+    <context>
+      <options preserveOrder='true'>
+        <option name='qmgr' required='true'>
+          <description>queue manager   </description>
+        </option>
+        <option enforcedvalues='true' name='object' required='true' value='all' values='all,authinfo,process,qalias,qmodel'>
+          <description>object type</description>
+        </option>
+        <option name='name' required='true' value='*'>
+          <description>*</description>
+        </option>
+      </options>
+    </context>
+    <defaultTab>summary</defaultTab>
+    <description>Display files associated with MQ objects</description>
+    <dispatch>
+      <excludePrecedence>true</excludePrecedence>
+      <keepgoing>false</keepgoing>
+      <rankOrder>ascending</rankOrder>
+      <successOnEmptyNodeFilter>false</successOnEmptyNodeFilter>
+      <threadcount>1</threadcount>
+    </dispatch>
+    <executionEnabled>true</executionEnabled>
+    <group>utility</group>
+    <id>0df08bfd-5e86-4c30-83d2-db021d4293c2</id>
+    <logging limit='200' limitAction='truncate' status='failed' />
+    <loglevel>INFO</loglevel>
+    <name>MQdspmqfls</name>
+    <nodeFilterEditable>true</nodeFilterEditable>
+    <nodefilters>
+      <filter>.*</filter>
+    </nodefilters>
+    <nodesSelectedByDefault>false</nodesSelectedByDefault>
+    <retry>1</retry>
+    <scheduleEnabled>true</scheduleEnabled>
+    <sequence keepgoing='false' strategy='node-first'>
+      <command>
+        <description>rdmq_display_mq_files</description>
+        <exec>dspmqfls -m ${option.qmgr} -t ${option.object} ${option.name}</exec>
+      </command>
+    </sequence>
+    <timeout>30</timeout>
+    <uuid>0df08bfd-5e86-4c30-83d2-db021d4293c2</uuid>
+  </job>
+</joblist>

@@ -1,0 +1,34 @@
+<joblist>
+  <job>
+    <defaultTab>summary</defaultTab>
+    <description>list open ports</description>
+    <dispatch>
+      <excludePrecedence>true</excludePrecedence>
+      <keepgoing>false</keepgoing>
+      <rankOrder>ascending</rankOrder>
+      <successOnEmptyNodeFilter>false</successOnEmptyNodeFilter>
+      <threadcount>1</threadcount>
+    </dispatch>
+    <executionEnabled>true</executionEnabled>
+    <group>utility</group>
+    <id>92f23dd8-095c-43f9-a8a4-20083a799c51</id>
+    <logging limit='10MB' limitAction='halt' status='failed' />
+    <loglevel>INFO</loglevel>
+    <name>firewall_listopenports</name>
+    <nodeFilterEditable>false</nodeFilterEditable>
+    <nodefilters>
+      <filter>.*</filter>
+    </nodefilters>
+    <nodesSelectedByDefault>false</nodesSelectedByDefault>
+    <retry>1</retry>
+    <scheduleEnabled>true</scheduleEnabled>
+    <sequence keepgoing='false' strategy='node-first'>
+      <command>
+        <description>listports</description>
+        <exec>sudo firewall-cmd --list-all</exec>
+      </command>
+    </sequence>
+    <timeout>5m</timeout>
+    <uuid>92f23dd8-095c-43f9-a8a4-20083a799c51</uuid>
+  </job>
+</joblist>

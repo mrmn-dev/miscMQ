@@ -1,0 +1,16 @@
+[Unit]
+Description=IBM MQ
+After=network.target
+
+[Service]
+User=mqm
+Group=mqm
+Type=forking
+ExecStart=/bin/bash /var/mqm/scripts/mqstart.sh
+ExecStop=/bin/bash /var/mqm/scripts/mqend.sh
+Killmode=none
+LimitNOFILE=10240
+LimitNOPROC=4096
+
+[Install]
+WantedBy=multi-user.target

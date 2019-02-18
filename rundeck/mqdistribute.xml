@@ -1,0 +1,44 @@
+<joblist>
+  <job>
+    <defaultTab>summary</defaultTab>
+    <description><![CDATA[distribute files associated with install_patching
+update source and target directories
+update node filter
+run job]]></description>
+    <dispatch>
+      <excludePrecedence>true</excludePrecedence>
+      <keepgoing>false</keepgoing>
+      <rankOrder>ascending</rankOrder>
+      <successOnEmptyNodeFilter>false</successOnEmptyNodeFilter>
+      <threadcount>1</threadcount>
+    </dispatch>
+    <executionEnabled>true</executionEnabled>
+    <group>install</group>
+    <id>10f5ac16-ae71-43cd-8c20-5a725622f83c</id>
+    <logging limit='100MB' limitAction='truncate' status='failed' />
+    <loglevel>INFO</loglevel>
+    <name>mqdistribute</name>
+    <nodeFilterEditable>true</nodeFilterEditable>
+    <nodefilters>
+      <filter>.*</filter>
+    </nodefilters>
+    <nodesSelectedByDefault>false</nodesSelectedByDefault>
+    <retry>1</retry>
+    <scheduleEnabled>true</scheduleEnabled>
+    <sequence keepgoing='false' strategy='node-first'>
+      <command>
+        <description>distdir</description>
+        <node-step-plugin type='copyfile'>
+          <configuration>
+            <entry key='destinationPath' value='/home/csmith/rdstage/' />
+            <entry key='echo' value='true' />
+            <entry key='recursive' value='false' />
+            <entry key='sourcePath' value='C:\Users\CWS\rdstage\' />
+          </configuration>
+        </node-step-plugin>
+      </command>
+    </sequence>
+    <timeout>10m</timeout>
+    <uuid>10f5ac16-ae71-43cd-8c20-5a725622f83c</uuid>
+  </job>
+</joblist>

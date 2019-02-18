@@ -1,0 +1,34 @@
+<joblist>
+  <job>
+    <defaultTab>summary</defaultTab>
+    <description>display mq version  </description>
+    <dispatch>
+      <excludePrecedence>true</excludePrecedence>
+      <keepgoing>false</keepgoing>
+      <rankOrder>ascending</rankOrder>
+      <successOnEmptyNodeFilter>false</successOnEmptyNodeFilter>
+      <threadcount>1</threadcount>
+    </dispatch>
+    <executionEnabled>true</executionEnabled>
+    <group>utility</group>
+    <id>b7fa383e-ed3d-4415-8a76-443c312a79a8</id>
+    <logging limit='10MB' limitAction='halt' status='failed' />
+    <loglevel>INFO</loglevel>
+    <name>MQdspmqver</name>
+    <nodeFilterEditable>true</nodeFilterEditable>
+    <nodefilters>
+      <filter>.*</filter>
+    </nodefilters>
+    <nodesSelectedByDefault>false</nodesSelectedByDefault>
+    <retry>1</retry>
+    <scheduleEnabled>true</scheduleEnabled>
+    <sequence keepgoing='false' strategy='node-first'>
+      <command>
+        <description>mqverion</description>
+        <exec>dspmqver</exec>
+      </command>
+    </sequence>
+    <timeout>5m</timeout>
+    <uuid>b7fa383e-ed3d-4415-8a76-443c312a79a8</uuid>
+  </job>
+</joblist>

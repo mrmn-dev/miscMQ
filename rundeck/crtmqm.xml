@@ -1,0 +1,41 @@
+<joblist>
+  <job>
+    <context>
+      <options preserveOrder='true'>
+        <option name='qmgrname' required='true' value='qmgr'>
+          <description>queue manager name  </description>
+        </option>
+      </options>
+    </context>
+    <defaultTab>summary</defaultTab>
+    <description>create queue manager    </description>
+    <dispatch>
+      <excludePrecedence>true</excludePrecedence>
+      <keepgoing>false</keepgoing>
+      <rankOrder>ascending</rankOrder>
+      <successOnEmptyNodeFilter>false</successOnEmptyNodeFilter>
+      <threadcount>1</threadcount>
+    </dispatch>
+    <executionEnabled>true</executionEnabled>
+    <group>qmgr</group>
+    <id>fdf75f93-81f7-4081-a3f5-4475abbb5526</id>
+    <logging limit='10MB' limitAction='halt' status='failed' />
+    <loglevel>INFO</loglevel>
+    <name>crtmqm</name>
+    <nodeFilterEditable>true</nodeFilterEditable>
+    <nodefilters>
+      <filter>.*</filter>
+    </nodefilters>
+    <nodesSelectedByDefault>false</nodesSelectedByDefault>
+    <retry>1</retry>
+    <scheduleEnabled>true</scheduleEnabled>
+    <sequence keepgoing='false' strategy='node-first'>
+      <command>
+        <description>create queue manager</description>
+        <exec>crtmqm ${option.qmgrname}</exec>
+      </command>
+    </sequence>
+    <timeout>5m</timeout>
+    <uuid>fdf75f93-81f7-4081-a3f5-4475abbb5526</uuid>
+  </job>
+</joblist>

@@ -1,0 +1,42 @@
+<joblist>
+  <job>
+    <defaultTab>summary</defaultTab>
+    <description>accept mq license and install rpm</description>
+    <dispatch>
+      <excludePrecedence>true</excludePrecedence>
+      <keepgoing>false</keepgoing>
+      <rankOrder>ascending</rankOrder>
+      <successOnEmptyNodeFilter>false</successOnEmptyNodeFilter>
+      <threadcount>1</threadcount>
+    </dispatch>
+    <executionEnabled>true</executionEnabled>
+    <group>install</group>
+    <id>522004ae-9796-4eeb-b0d5-0fec71e90287</id>
+    <logging limit='10MB' limitAction='halt' status='failed' />
+    <loglevel>INFO</loglevel>
+    <name>rpminstall</name>
+    <nodeFilterEditable>true</nodeFilterEditable>
+    <nodefilters>
+      <filter>.*</filter>
+    </nodefilters>
+    <nodesSelectedByDefault>false</nodesSelectedByDefault>
+    <retry>1</retry>
+    <scheduleEnabled>true</scheduleEnabled>
+    <sequence keepgoing='false' strategy='node-first'>
+      <command>
+        <description>accept license</description>
+        <exec>cd ~/rdstage/MQServer &amp;&amp; sudo ./mqlicense.sh -accept</exec>
+      </command>
+      <command>
+        <description>rpm install</description>
+        <exec>cd ~/rdstage/MQServer &amp;&amp; sudo rpm -ivh MQSeries*.rpm</exec>
+      </command>
+      <command>
+        <description>list mqseries rpm installed</description>
+        <exec>rpm -qa | grep MQSeries</exec>
+      </command>
+    </sequence>
+    <timeout>5m</timeout>
+    <uuid>522004ae-9796-4eeb-b0d5-0fec71e90287</uuid>
+  </job>
+</joblist>
